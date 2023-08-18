@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\00.package\Taav.Contracts\Taav.Contracts.csproj" />
     <ProjectReference Include="..\..\01.core\ManageShop.Entities\ManageShop.Entities.csproj" />
+    <ProjectReference Include="..\..\01.core\ManageShop.Services\ManageShop.Services.csproj" />
   </ItemGroup>
 
 </Project>
