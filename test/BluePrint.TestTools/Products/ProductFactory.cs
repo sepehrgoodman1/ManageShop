@@ -13,6 +13,8 @@ namespace BluePrint.TestTools.Products
 {
     public static class ProductFactory
     {
+      
+
         public static Product Create(ProductGroup productGroup, string title = "shir",
             int inventory = 12, int minimumInventory = 10,
             double price = 100 , ProductStatus productStatus = ProductStatus.Available
@@ -28,13 +30,13 @@ namespace BluePrint.TestTools.Products
                 Status = productStatus,
             };
         }
-    /*    public static AddProductGroupDto CreateAddDto(string name = "dummy")
+        public static AddProductDto CreateAddDto(string name = "dummy")
         {
-            return new AddProductGroupDto()
+            return new AddProductDto()
             {
                 Name = name,
             };
-        }*/
+        }
 
         /*public static ProductGroupAppService CreateService(EFDataContext context)
         {

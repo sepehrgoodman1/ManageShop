@@ -35,5 +35,7 @@ namespace ManageShop.Persistence.Ef.ProductGroups
         {
             return await _productGroups.AnyAsync(_ => _.Name == name);
         }
+
+       
     }
 }

@@ -62,7 +62,8 @@ namespace ManageShop.Specs.Tests.ProductGroups.Delete
 
                 var result = ReadContext.Set<ProductGroup>().Single();
                 result.Name.Should().Be(productGroup.Name);
-            }
+                result.Id.Should().Be(productGroup.Id);
+        }
 
             [Fact]
             public void Run()

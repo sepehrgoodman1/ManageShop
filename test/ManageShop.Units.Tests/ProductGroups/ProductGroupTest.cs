@@ -6,6 +6,7 @@ using FluentAssertions;
 using ManageShop.Entities.Entities;
 using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
+using ManageShop.Services.ProductGroups.Contracts.Dtos;
 using ManageShop.Services.ProductGroups.Exception;
 using System;
 using System.Collections.Generic;
@@ -111,6 +112,54 @@ namespace ManageShop.Units.Tests.ProductGroups
             result.Name.Should().Be(productGroup.Name);
             result.Id.Should().Be(productGroup.Id);
         }
+
+        [Fact]
+        public async Task Update_update_productgroup_duplicate_name_exception()
+        {
+            // Arrange
+            var productGroup1 = ProductGroupFactory.Create("Labaniat");
+            var productGroup2 = ProductGroupFactory.Create("Noshidani");
+            DbContext.SaveRange(productGroup1, productGroup2);
+            var dto = new AddProductGroupDto
+            {
+                Name = productGroup2.Name
+            };
+
+            // Act
+            var _expected = () => _sut.Update(productGroup1.Id, dto);
+
+            // Assert
+            await _expected.Should().ThrowExactlyAsync<DuplicateProductGroupNameException>();
+            var result = ReadContext.Set<ProductGroup>();
+            result.Where(_ => _.Id == productGroup1.Id).Should().NotBeNullOrEmpty();
+            result.Where(_ => _.Id == productGroup2.Id).Should().NotBeNullOrEmpty();
+            result.Where(_ => _.Name == productGroup2.Name).Should().NotBeNullOrEmpty();
+            result.Where(_ => _.Name == productGroup2.Name).Should().NotBeNullOrEmpty();
+
+        }
+
+         [Fact]
+        public async Task Update_update_productgroup()
+        {
+            // Arrange
+            var productGroup1 = ProductGroupFactory.Create("Labaniat");
+            DbContext.Save(productGroup1);
+            var dto = new AddProductGroupDto
+            {
+                Name = "Noshidani"
+            };
+
+            // Act
+            await _sut.Update(productGroup1.Id, dto);
+
+            // Assert
+            var result = ReadContext.Set<ProductGroup>().Single();
+            result.Name.Should().Be(dto.Name);
+            result.Id.Should().Be(productGroup1.Id);
+
+        }
+
+
 
 
 

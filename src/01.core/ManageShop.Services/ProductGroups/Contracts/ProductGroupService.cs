@@ -1,4 +1,5 @@
-﻿using ManageShop.Services.ProductGroups.Contracts.Dtos;
+﻿using BluePrint.TestTools.Products;
+using ManageShop.Services.ProductGroups.Contracts.Dtos;
 
 namespace ManageShop.Services.ProductGroups.Contracts
 {
@@ -6,5 +7,6 @@ namespace ManageShop.Services.ProductGroups.Contracts
     {
         Task<int> Add(AddProductGroupDto dto);
         Task Delete(int id);
+        Task Update(int id, AddProductGroupDto dto);
     }
 }

@@ -1,4 +1,5 @@
-﻿using ManageShop.Entities.Entities;
+﻿using BluePrint.TestTools.Products;
+using ManageShop.Entities.Entities;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Contracts.Dtos;
 using ManageShop.Services.ProductGroups.Exception;
@@ -55,6 +56,31 @@ namespace ManageShop.Services.ProductGroups
             }
 
             _repository.Delete(productGroup);
+
+            await _unitOfWork.Complete();
+
+        }
+
+        public async Task Update(int id, AddProductGroupDto dto)
+        {
+            var productGroup = await _repository.GetById(id);
+
+            if (productGroup == null)
+            {
+                throw new ProductGroupNotFoundException();
+            }
+
+            if (await _repository.IsExistByName(dto.Name))
+            {
+                throw new DuplicateProductGroupNameException();
+            }
+
+            if (await _productRepository.HaveProduct(id))
+            {
+                throw new ProductGroupHaveProductException();
+            }
+
+            productGroup.Name = dto.Name;
 
             await _unitOfWork.Complete();
 
