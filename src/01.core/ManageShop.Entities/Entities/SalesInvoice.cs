@@ -17,8 +17,6 @@ namespace ManageShop.Entities.Entities
         public DateTime Date { get; set; }
         public double TotalSales { get; set; }
         public HashSet<ProductSalesInvoice> ProductSalesInvoices { get; set; }
-        public int AccountingDocumentId { get; set; }
-        public AccountingDocument AccountingDocument { get; set; }
 
     }
 }

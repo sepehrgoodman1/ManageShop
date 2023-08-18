@@ -9,5 +9,22 @@
 	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="AccountingDocuments\Contracts\Dtos\" />
+	  <Folder Include="AccountingDocuments\Exception\" />
+	  <Folder Include="ProductGroups\Contracts\Dtos\" />
+	  <Folder Include="ProductGroups\Exception\" />
+	  <Folder Include="ProductPurchaseInvoices\Contracts\Dtos\" />
+	  <Folder Include="ProductPurchaseInvoices\Exception\" />
+	  <Folder Include="ProductSalesInvoices\Contracts\Dtos\" />
+	  <Folder Include="ProductSalesInvoices\Exception\" />
+	  <Folder Include="Products\Contracts\Dtos\" />
+	  <Folder Include="Products\Exception\" />
+	  <Folder Include="PurchaseInvoices\Contracts\Dtos\" />
+	  <Folder Include="PurchaseInvoices\Exception\" />
+	  <Folder Include="SalesInvoices\Contracts\Dtos\" />
+	  <Folder Include="SalesInvoices\Exception\" />
+	</ItemGroup>
 
 </Project>

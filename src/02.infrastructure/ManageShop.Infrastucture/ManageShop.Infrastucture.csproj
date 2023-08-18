@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.5" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.5" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.package\Taav.Contracts\Taav.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
