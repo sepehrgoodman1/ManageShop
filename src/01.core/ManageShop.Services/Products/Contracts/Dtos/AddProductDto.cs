@@ -1,7 +1,10 @@
-﻿namespace BluePrint.TestTools.Products
+﻿namespace ManageShop.Services.Products.Contracts.Dtos
 {
     public class AddProductDto
     {
-        public string Name { get; set; }
+        public int ProductGroupId { get; set; }
+        public string Title { get; set; }
+        public double Price { get; set; }
+        public int MinimumInventory { get; set; }
     }
 }

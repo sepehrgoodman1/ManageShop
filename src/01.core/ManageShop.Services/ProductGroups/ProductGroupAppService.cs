@@ -1,5 +1,4 @@
-﻿using BluePrint.TestTools.Products;
-using ManageShop.Entities.Entities;
+﻿using ManageShop.Entities.Entities;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Contracts.Dtos;
 using ManageShop.Services.ProductGroups.Exception;
@@ -14,7 +13,8 @@ namespace ManageShop.Services.ProductGroups
         private readonly ProductRepository _productRepository;
         private readonly UnitOfWork _unitOfWork;
 
-        public ProductGroupAppService(ProductGroupRepository repository, UnitOfWork unitOfWork, ProductRepository productRepository)
+        public ProductGroupAppService(ProductGroupRepository repository,
+            UnitOfWork unitOfWork, ProductRepository productRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;

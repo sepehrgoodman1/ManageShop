@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 
 namespace ManageShop.Units.Tests.ProductGroups
 {
-    public class ProductGroupTest : BusinessUnitTest
+    public class ProductGroupServiceTests : BusinessUnitTest
     {
 
         private readonly ProductGroupService _sut;
 
-        public ProductGroupTest()
+        public ProductGroupServiceTests()
         {
             _sut = ProductGroupFactory.CreateService(SetupContext);
         }

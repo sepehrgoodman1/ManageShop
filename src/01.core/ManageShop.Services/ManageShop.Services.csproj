@@ -17,7 +17,6 @@
 	  <Folder Include="ProductPurchaseInvoices\Exception\" />
 	  <Folder Include="ProductSalesInvoices\Contracts\Dtos\" />
 	  <Folder Include="ProductSalesInvoices\Exception\" />
-	  <Folder Include="Products\Exception\" />
 	  <Folder Include="PurchaseInvoices\Contracts\Dtos\" />
 	  <Folder Include="PurchaseInvoices\Exception\" />
 	  <Folder Include="SalesInvoices\Contracts\Dtos\" />

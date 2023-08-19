@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ManageShop.Persistence.Ef.Productss;
+using ManageShop.Services.Products.Contracts.Dtos;
+using ManageShop.Services.Products;
 
 namespace BluePrint.TestTools.Products
 {
@@ -30,21 +33,27 @@ namespace BluePrint.TestTools.Products
                 Status = productStatus,
             };
         }
-        public static AddProductDto CreateAddDto(string name = "dummy")
+        public static AddProductDto CreateAddDto(int productGroupId
+             , string title = "dummy ", double price = 100 ,
+            int minimumInventory = 10)
         {
             return new AddProductDto()
             {
-                Name = name,
+                ProductGroupId = productGroupId,
+                Title = title,
+                Price = price,
+                MinimumInventory = minimumInventory,
             };
         }
 
-        /*public static ProductGroupAppService CreateService(EFDataContext context)
+        public static ProductAppService CreateService(EFDataContext context)
         {
+            var productRepos = new EFProductRepository(context);
             var productGroupRepos = new EFProductGroupRepository(context);
             var unitOfWork = new EFUnitOfWork(context);
 
-            return new ProductGroupAppService(productGroupRepos, unitOfWork);
+            return new ProductAppService(productRepos, unitOfWork, productGroupRepos);
 
-        }*/
+        }
     }
 }

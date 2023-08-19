@@ -1,5 +1,4 @@
-﻿using BluePrint.TestTools.Products;
-using ManageShop.Services.ProductGroups.Contracts.Dtos;
+﻿using ManageShop.Services.ProductGroups.Contracts.Dtos;
 
 namespace ManageShop.Services.ProductGroups.Contracts
 {

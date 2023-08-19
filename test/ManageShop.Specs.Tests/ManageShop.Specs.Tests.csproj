@@ -29,8 +29,4 @@
     <ProjectReference Include="..\BluePrint.TestTools\BluePrint.TestTools.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Products\" />
-  </ItemGroup>
-
 </Project>

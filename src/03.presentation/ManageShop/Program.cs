@@ -1,7 +1,10 @@
 using ManageShop.Persistence.Ef;
 using ManageShop.Persistence.Ef.ProductGroups;
+using ManageShop.Persistence.Ef.Productss;
 using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
+using ManageShop.Services.Products;
+using ManageShop.Services.Products.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Taav.Contracts.Interfaces;
 
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<EFDataContext>(options => options.UseSqlServer(bui
 
 builder.Services.AddScoped<ProductGroupService, ProductGroupAppService>();
 builder.Services.AddScoped<ProductGroupRepository, EFProductGroupRepository>();
+builder.Services.AddScoped<ProductService, ProductAppService>();
+builder.Services.AddScoped<ProductRepository, EFProductRepository>();
 
 builder.Services.AddScoped<UnitOfWork, EFUnitOfWork>();
 

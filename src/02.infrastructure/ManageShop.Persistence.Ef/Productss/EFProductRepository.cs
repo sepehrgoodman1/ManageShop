@@ -13,9 +13,20 @@ namespace ManageShop.Persistence.Ef.Productss
             _products = context.Products;
         }
 
+        public async Task Add(Product product)
+        {
+            await _products.AddAsync(product);
+        }
+
         public async Task<bool> HaveProduct(int productGroupId)
         {
             return await _products.AnyAsync(_=> _.ProductGroupId == productGroupId);
+        }
+
+        public async Task<bool> IsExistTitle(string title, int productGroupId)
+        {
+            return await _products.AnyAsync(_ => _.Title == title &&
+                                            _.ProductGroupId == productGroupId);
         }
     }
 }
