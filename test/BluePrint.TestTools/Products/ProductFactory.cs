@@ -19,7 +19,7 @@ namespace BluePrint.TestTools.Products
       
 
         public static Product Create(ProductGroup productGroup, string title = "shir",
-            int inventory = 12, int minimumInventory = 10,
+            int inventory = 0, int minimumInventory = 10,
             double price = 100 , ProductStatus productStatus = ProductStatus.Available
             )
         {

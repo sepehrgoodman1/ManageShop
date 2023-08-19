@@ -30,9 +30,9 @@ namespace ManageShop.Specs.Tests.Products.Add
 
         //User Story
         [Feature(
-            AsA = "من به عنوان مسئول انبار",
-            IWantTo = "می خواهم ثبت ورود کاال به انبار را ثبت کنم",
-            InOrderTo = "تا بتوانم انبار کاالها را مدیریت کنم"
+            AsA = "من به عنوان مسئول فروشگاه",
+            IWantTo = "می خواهم ورود کالاها به گروه کالا را ثبت کنم",
+            InOrderTo = "تا بتوانم کالاها را مدیریت کنم"
             )
      ]
 
@@ -63,6 +63,8 @@ namespace ManageShop.Specs.Tests.Products.Add
             var actual = ReadContext.Set<Product>().Single();
             actual.Title.Should().Be(product.Title);
             actual.Id.Should().Be(product.Id);
+            actual.MinimumInventory.Should().Be(product.MinimumInventory);
+            actual.Price.Should().Be(product.Price);
         }
 
         [Fact]

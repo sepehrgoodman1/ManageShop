@@ -85,6 +85,8 @@ namespace ManageShop.Units.Tests.Products
             var actual = ReadContext.Set<Product>().Single();
             actual.Title.Should().Be(product.Title);
             actual.Id.Should().Be(product.Id);
+            actual.MinimumInventory.Should().Be(product.MinimumInventory);
+            actual.Price.Should().Be(product.Price);
 
         }
     }

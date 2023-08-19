@@ -20,7 +20,6 @@ namespace ManageShop.Persistence.Ef.Productss
             _.Property(_ => _.MinimumInventory).IsRequired();
             _.Property(_ => _.Price).IsRequired();
             _.Property(_ => _.Status).IsRequired();
-            _.Property(_ => _.Status).IsRequired();
             _.HasOne(_ => _.ProductGroup).WithMany(_ => _.Products).HasForeignKey(x => x.ProductGroupId);
         }
     }

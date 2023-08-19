@@ -29,9 +29,9 @@ namespace ManageShop.Specs.Tests.Products.Add
 
         //User Story
         [Feature(
-            AsA = "من به عنوان مسئول انبار",
-            IWantTo = "می خواهم ثبت ورود کاال به انبار را ثبت کنم",
-            InOrderTo = "تا بتوانم انبار کاالها را مدیریت کنم"
+            AsA = "من به عنوان مسئول فروشگاه",
+            IWantTo = "می خواهم ورود کالاها به گروه کالاها را ثبت کنم",
+            InOrderTo = "تا بتوانم کالاها را مدیریت کنم"
             )
      ]
 
