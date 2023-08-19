@@ -30,7 +30,8 @@ namespace ManageShop.Units.Tests.PurchaseInvoices
         public async Task Add_add_a_purachase_invoice()
         {
             var productGroup = ProductGroupFactory.Create("لبنیات");
-            var product = ProductFactory.Create(productGroup, "شیر", inventory: 5, minimumInventory: 5);
+            var product = ProductFactory.Create(productGroup, "شیر",
+                inventory: 5, minimumInventory: 5, productStatus: ProductStatus.ReadyToOrder);
             DbContext.Save(product);
             var dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 20);
 
@@ -65,6 +66,53 @@ namespace ManageShop.Units.Tests.PurchaseInvoices
             actualProduct.Inventory.Should().Be(product.Inventory);
             actualProduct.Status.Should().Be(product.Status);
            
+        }
+
+        [Fact]
+        public async Task Add_add_a_purachase_invoice_ready_to_order_status()
+        {
+            var productGroup = ProductGroupFactory.Create("لبنیات");
+            var product = ProductFactory.Create(productGroup, "شیر",
+                inventory: 2, minimumInventory: 10, productStatus: ProductStatus.ReadyToOrder);
+            DbContext.Save(product);
+            var dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 5);
+
+            await _sut.Add(dto);
+
+            var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
+                .ThenInclude(_ => _.Products).Single();
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Id
+                .Should().Be(product.Id);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First()
+                .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should()
+                .Be(ProductStatus.ReadyToOrder);
+        }
+        [Fact]
+        public async Task Add_add_a_purachase_invoice_ready_to_order_status_equel_minimum()
+        {
+            var productGroup = ProductGroupFactory.Create("لبنیات");
+            var product = ProductFactory.Create(productGroup, "شیر",
+                inventory: 5, minimumInventory: 10, productStatus: ProductStatus.ReadyToOrder);
+            DbContext.Save(product);
+            var dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 5);
+
+            await _sut.Add(dto);
+
+            var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
+                .ThenInclude(_ => _.Products).Single();
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Id
+                .Should().Be(product.Id);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First()
+                .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should()
+                .Be(ProductStatus.ReadyToOrder);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ManageShop.Entities.Entities;
-using ManageShop.Services.NewProducts.Contracts;
 using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.Products.Exception;
 using ManageShop.Services.PurchaseInvoices.Contracts;
@@ -17,16 +16,14 @@ namespace ManageShop.Services.PurchaseInvoices
 {
     public class PurchaseInvoiceAppService : PurchaseInvoiceService
     {
-        private readonly NewProductRepository _newProductRepository;
         private readonly PurchaseInvoiceRepository _purchaseInvoiceRepository;
         private readonly UnitOfWork _unitOfWork;
         private readonly ProductRepository _productRepository;
 
-        public PurchaseInvoiceAppService(NewProductRepository newProductRepository,
+        public PurchaseInvoiceAppService(
             PurchaseInvoiceRepository purchaseInvoiceRepository,
             UnitOfWork unitOfWork, ProductRepository productRepository)
         {
-            _newProductRepository = newProductRepository;
             _purchaseInvoiceRepository = purchaseInvoiceRepository;
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
@@ -50,7 +47,7 @@ namespace ManageShop.Services.PurchaseInvoices
                 {
                     _.Status = ProductStatus.Available;
                 }
-                else if(dto.Where(d => d.ProductCode == _.Id).FirstOrDefault().ProductRecivedCount < _.MinimumInventory)
+                else if(dto.Where(d => d.ProductCode == _.Id).FirstOrDefault().ProductRecivedCount <= _.MinimumInventory)
                 {
                     _.Status = ProductStatus.ReadyToOrder;
                 }

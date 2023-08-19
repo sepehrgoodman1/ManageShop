@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ManageShop.Services.PurchaseInvoices;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
-using ManageShop.Persistence.Ef.NewProducts;
 using ManageShop.Persistence.Ef.PurchaseInvoics;
 
 namespace BluePrint.TestTools.PurchaseInvoices
@@ -48,12 +47,11 @@ namespace BluePrint.TestTools.PurchaseInvoices
 
             public static PurchaseInvoiceAppService CreateService(EFDataContext context)
         {
-            var newProductRepos = new EFNewProductRepository(context);
             var productRepos = new EFProductRepository(context);
             var purchaseInvoiceRepos = new EFPurchaseInvoiceRepository(context);
             var unitOfWork = new EFUnitOfWork(context);
 
-            return new PurchaseInvoiceAppService(newProductRepos, purchaseInvoiceRepos, unitOfWork, productRepos);
+            return new PurchaseInvoiceAppService( purchaseInvoiceRepos, unitOfWork, productRepos);
 
         }
     }

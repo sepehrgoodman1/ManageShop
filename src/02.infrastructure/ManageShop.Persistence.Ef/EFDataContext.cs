@@ -25,6 +25,5 @@ namespace ManageShop.Persistence.Ef
         public DbSet<ProductSalesInvoice> ProductSalesInvoices { get; set; }
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
-        public DbSet<NewProduct> NewProducts { get; set; }
     }
 }

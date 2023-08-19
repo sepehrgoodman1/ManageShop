@@ -17,7 +17,6 @@ namespace ManageShop.Persistence.Ef.PurchaseInvoics
             _.HasKey(_ => _.Id);
             _.Property(_ => _.Id).ValueGeneratedOnAdd().IsRequired();
             _.Property(_ => _.Date).IsRequired();
-            _.Property(_ => _.NewProducts).IsRequired();
         }
     }
 }

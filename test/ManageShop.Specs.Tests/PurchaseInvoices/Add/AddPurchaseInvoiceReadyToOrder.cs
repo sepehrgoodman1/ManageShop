@@ -1,27 +1,29 @@
 ﻿using BluePrint.TestTools.Infrastructure.DataBaseConfig;
 using BluePrint.TestTools.Infrastructure.DataBaseConfig.Integration;
-using BluePrint.TestTools.Infrastructure.DataBaseConfig.Unit;
 using BluePrint.TestTools.ProductGroups;
 using BluePrint.TestTools.Products;
 using BluePrint.TestTools.PurchaseInvoices;
-using FluentAssertions;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.Products.Contracts;
-using ManageShop.Services.PurchaseInvoices.Contracts;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
+using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
 {
-    public class AddPurchaseInvoice : BusinessIntegrationTest
+    public class AddPurchaseInvoiceReadyToOrder : BusinessIntegrationTest
     {
         private ProductGroup productGroup;
         private Product product;
         private List<AddPurchaseInvoiceDto> dto;
-        private int _purchaseInvoiceId;
         private readonly PurchaseInvoiceService _sut;
 
-        public AddPurchaseInvoice()
+        public AddPurchaseInvoiceReadyToOrder()
         {
             _sut = PurchaseInvoicesFactory.CreateService(SetupContext);
         }
@@ -35,38 +37,39 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
      ]
 
         // scenario
-        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا موجود باشد")]
+        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا اماده سفارش باشد")]
 
-        [Given(" یک کالا با کد کالا 1 و تعداد موجودی 5 عدد و حداقل موجودی 5 و وضعیت موجود در فهرست کالاها وجود دارد")]
+        [Given(" یک کالا با کد کالا 1 و تعداد موجودی 2 عدد و حداقل موجودی 10 و وضعیت اماده سفارش در فهرست کالاها وجود دارد")]
         private void Given()
         {
             productGroup = ProductGroupFactory.Create("لبنیات");
-            product = ProductFactory.Create(productGroup, "شیر", inventory: 5, minimumInventory: 5);
+            product = ProductFactory.Create(productGroup, "شیر", inventory: 2,
+                minimumInventory: 10 , productStatus: ProductStatus.ReadyToOrder);
             DbContext.Save(product);
         }
 
-        [When("بیست عدد کالا با کد 1 را در تاریخ 1402/05/08 به فهرست کالاهای با کد 1 اضافه می کنم")]
+        [When(" پنج عدد کالا با کد 1 را در تاریخ 08/05/1402 به فهرست کالاهای با کد 1 اضافه می کنم")]
         private async Task When()
         {
-            
-            dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 20);
 
-            _purchaseInvoiceId = await _sut.Add(dto);
+            dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 5);
+
+            await _sut.Add(dto);
         }
 
-        [Then(" باید 25 عدد کالا با کد 1 و تاریخ 05/08 /1402 را در فهرست کالاها داشته باشد")]
-        [And(" وضعیت کالا با کد 1 موجود باشد")]
+        [Then(" باید 7 عدد کالا با کد 1 و تاریخ 08/05/1402 را در فهرست کالاها داشته باشد")]
+        [And(" وضعیت کالا با کد 1 اماده سفارش باشد")]
         private void Then()
         {
             var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
                 .ThenInclude(_ => _.Products).Single();
 
-            actual.ProductPurchaseInvoices.Select(_=>_.Products).First().Id.Should().Be(product.Id);
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Id.Should().Be(product.Id);
 
-            actual.ProductPurchaseInvoices.Select(_=>_.Products).First()
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First()
                 .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
 
-            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should().Be(ProductStatus.Available);
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should().Be(ProductStatus.ReadyToOrder);
 
             // Date
         }
@@ -80,6 +83,4 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
                 _ => Then());
         }
     }
-
-
 }
