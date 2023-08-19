@@ -11,11 +11,10 @@ namespace ManageShop.Entities.Entities
         public PurchaseInvoice()
         {
             ProductPurchaseInvoices = new();
-            NewProducts = new();
         }
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public HashSet<NewProduct> NewProducts { get; set; }
+        public HashSet<NewProduct> NewProducts { get; set; } = new HashSet<NewProduct>();
         public HashSet<ProductPurchaseInvoice> ProductPurchaseInvoices { get; set; }
 
     }

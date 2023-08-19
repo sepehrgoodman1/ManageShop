@@ -18,6 +18,16 @@ namespace ManageShop.Persistence.Ef.Productss
             await _products.AddAsync(product);
         }
 
+        public  async Task<List<Product>> FindAllByIds(List<int> enumerable)
+        {
+            return await _products.Where(_ => enumerable.Contains(_.Id)).ToListAsync();
+        }
+
+        public async Task<Product> GetById(int id)
+        {
+            return await _products.FindAsync(id);
+        }
+
         public async Task<bool> HaveProduct(int productGroupId)
         {
             return await _products.AnyAsync(_=> _.ProductGroupId == productGroupId);
@@ -27,6 +37,11 @@ namespace ManageShop.Persistence.Ef.Productss
         {
             return await _products.AnyAsync(_ => _.Title == title &&
                                             _.ProductGroupId == productGroupId);
+        }
+
+        public void Update(List<Product> products)
+        {
+            _products.UpdateRange(products);
         }
     }
 }

@@ -1,10 +1,16 @@
 using ManageShop.Persistence.Ef;
+using ManageShop.Persistence.Ef.NewProducts;
 using ManageShop.Persistence.Ef.ProductGroups;
 using ManageShop.Persistence.Ef.Productss;
+using ManageShop.Persistence.Ef.PurchaseInvoics;
+using ManageShop.Services.NewProducts;
+using ManageShop.Services.NewProducts.Contracts;
 using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.Products;
 using ManageShop.Services.Products.Contracts;
+using ManageShop.Services.PurchaseInvoices;
+using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Taav.Contracts.Interfaces;
 
@@ -17,6 +23,10 @@ builder.Services.AddScoped<ProductGroupService, ProductGroupAppService>();
 builder.Services.AddScoped<ProductGroupRepository, EFProductGroupRepository>();
 builder.Services.AddScoped<ProductService, ProductAppService>();
 builder.Services.AddScoped<ProductRepository, EFProductRepository>();
+builder.Services.AddScoped<PurchaseInvoiceService, PurchaseInvoiceAppService>();
+builder.Services.AddScoped<PurchaseInvoiceRepository, EFPurchaseInvoiceRepository>();
+builder.Services.AddScoped<NewProductService, NewProductAppService>();
+builder.Services.AddScoped<NewProductRepository, EFNewProductRepository>();
 
 builder.Services.AddScoped<UnitOfWork, EFUnitOfWork>();
 

@@ -1,25 +1,29 @@
 ﻿using BluePrint.TestTools.Infrastructure.DataBaseConfig;
 using BluePrint.TestTools.Infrastructure.DataBaseConfig.Integration;
+using BluePrint.TestTools.Infrastructure.DataBaseConfig.Unit;
 using BluePrint.TestTools.ProductGroups;
 using BluePrint.TestTools.Products;
+using BluePrint.TestTools.PurchaseInvoices;
+using FluentAssertions;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.Products.Contracts.Dtos;
 using ManageShop.Services.Products.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ManageShop.Services.PurchaseInvoices.Contracts;
+using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
 {
-    public class AddPurchaseInvoice :BusinessIntegrationTest
+    public class AddPurchaseInvoice : BusinessIntegrationTest
     {
-   
+        private ProductGroup productGroup;
+        private Product product;
+        private List<AddPurchaseInvoiceDto> dto;
+        private int _purchaseInvoiceId;
+        private readonly PurchaseInvoiceService _sut;
 
         public AddPurchaseInvoice()
         {
-            
+            _sut = PurchaseInvoicesFactory.CreateService(SetupContext);
         }
 
         //User Story
@@ -31,25 +35,40 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
      ]
 
         // scenario
-        [Scenario("ثبت ورود کالا وقتی که وضعیت کاال موجود باشد")]
+        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا موجود باشد")]
 
-        [Given(" یک کالا با کد کالا 12 و تعداد موجودی 5 عدد و حداقل موجودی 5 و وضعیت موجود در فهرست کالاها وجود دارد")]
+        [Given(" یک کالا با کد کالا 1 و تعداد موجودی 5 عدد و حداقل موجودی 5 و وضعیت موجود در فهرست کالاها وجود دارد")]
         private void Given()
         {
-          
+            productGroup = ProductGroupFactory.Create("لبنیات");
+            product = ProductFactory.Create(productGroup, "شیر", inventory: 5, minimumInventory: 5);
+            DbContext.Save(product);
         }
 
-        [When("بیست عدد کالا با کد 12 را در تاریخ 1402/05/08 به فهرست کالاهای ورودی اضافه می کنم")]
+        [When("بیست عدد کالا با کد 1 را در تاریخ 1402/05/08 به فهرست کالاهای با کد 1 اضافه می کنم")]
         private async Task When()
         {
-        
+            
+            dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 20);
+
+            _purchaseInvoiceId = await _sut.Add(dto);
         }
 
-        [Then(" باید 20 عدد کاال با کد 12 و تاریخ 05/08 /1402 را در فهرست کالاهای ورودی داشته باشد")]
-        [And(" موجودی کالا با کد 12 باید برابر با 25 شود و وضعیت آن همچنان موجود باشد.")]
+        [Then(" باید 25 عدد کالا با کد 1 و تاریخ 05/08 /1402 را در فهرست کالاها داشته باشد")]
+        [And(" وضعیت کالا با کد 1 موجود باشد")]
         private void Then()
         {
-            
+            var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
+                .ThenInclude(_ => _.Products).Single();
+
+            actual.ProductPurchaseInvoices.Select(_=>_.Products).First().Id.Should().Be(product.Id);
+
+            actual.ProductPurchaseInvoices.Select(_=>_.Products).First()
+                .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should().Be(ProductStatus.Available);
+
+            // Date
         }
 
         [Fact]
@@ -61,4 +80,6 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
                 _ => Then());
         }
     }
+
+
 }

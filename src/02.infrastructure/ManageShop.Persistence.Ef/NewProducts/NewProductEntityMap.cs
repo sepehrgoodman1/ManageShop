@@ -17,7 +17,6 @@ namespace ManageShop.Persistence.Ef.NewProducts
             _.HasKey(_ => _.Id);
             _.Property(_ => _.Id).ValueGeneratedOnAdd().IsRequired();
             _.Property(_ => _.ProductCode).IsRequired();
-            _.Property(_ => _.ProductTitle).IsRequired();
             _.Property(_ => _.ProductRecivedCount).IsRequired();
             _.HasOne(_ => _.PurchaseInvoice).WithMany(_ => _.NewProducts)
                 .HasForeignKey(x => x.PurchaseInvoiceId);

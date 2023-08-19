@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManageShop.Services.NewProducts.Contracts
+namespace ManageShop.Services.PurchaseInvoices.Contracts
 {
-    public interface NewProductRepository
+    public interface PurchaseInvoiceRepository
     {
-        Task Add(List<NewProduct> newProducts);
+        Task Add(PurchaseInvoice purchaseInvoice);
     }
 }

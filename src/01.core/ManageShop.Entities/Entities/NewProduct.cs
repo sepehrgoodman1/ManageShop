@@ -10,7 +10,6 @@ namespace ManageShop.Entities.Entities
     {
         public int Id { get; set; }
         public int ProductCode { get; set; }
-        public int ProductTitle { get; set; }
         public int ProductRecivedCount { get; set; }
         public int PurchaseInvoiceId { get; set; }
         public PurchaseInvoice PurchaseInvoice { get; set; }
