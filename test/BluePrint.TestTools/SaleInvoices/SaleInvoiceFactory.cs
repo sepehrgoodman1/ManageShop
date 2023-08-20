@@ -29,7 +29,7 @@ namespace BluePrint.TestTools.SaleInvoices
             return new SaleInvoiceAppService(unitOfWork, productRepos, saleInvoiceRep, AccountDocumentRepos);
 
         }
-        public static List<AddSaleInvoiceDto> CreateAddDto(int ProductCode1, int ProductCount1,
+        public static List<AddSaleInvoiceDto> CreateAddDtoTwo(int ProductCode1, int ProductCount1,
             double UnitPrice1, int ProductCode2 = 2, int ProductCount2 = 20, double UnitPrice2 = 50)
         {
             return new List<AddSaleInvoiceDto>
@@ -46,6 +46,22 @@ namespace BluePrint.TestTools.SaleInvoices
                      ProductCount = ProductCount2,
                      UnitPrice = UnitPrice2,
                 },
+
+            };
+        }
+
+        public static List<AddSaleInvoiceDto> CreateAddDtoOne(int ProductCode1, int ProductCount1,
+           double UnitPrice1)
+        {
+            return new List<AddSaleInvoiceDto>
+            {
+                new AddSaleInvoiceDto
+                {
+                     ProductCode = ProductCode1,
+                     ProductCount = ProductCount1,
+                     UnitPrice = UnitPrice1,
+                },
+               
 
             };
         }

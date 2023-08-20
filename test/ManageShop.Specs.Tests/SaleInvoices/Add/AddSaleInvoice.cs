@@ -60,7 +60,7 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
             " کالا با کد 2 و تعداد 10 عدد را در تاریخ 08/05/1402 با قیمت هر واحد 50 هزار تومن  خریداری میکند")]
         private async Task When()
         {
-            dto = SaleInvoiceFactory.CreateAddDto(product1.Id, 20, 100, product2.Id, 10, 50);
+            dto = SaleInvoiceFactory.CreateAddDtoTwo(product1.Id, 20, 100, product2.Id, 10, 50);
 
             await _sut.Add("سپهر", dto);
         

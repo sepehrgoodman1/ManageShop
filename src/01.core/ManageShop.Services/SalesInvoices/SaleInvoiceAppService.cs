@@ -4,6 +4,7 @@ using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.Products.Exception;
 using ManageShop.Services.SalesInvoices.Contracts;
 using ManageShop.Services.SalesInvoices.Contracts.Dtos;
+using ManageShop.Services.SalesInvoices.Exception;
 using Taav.Contracts.Interfaces;
 
 namespace ManageShop.Services.SalesInvoices
@@ -33,9 +34,17 @@ namespace ManageShop.Services.SalesInvoices
                 throw new InvalidProductCodeException();
             }
 
+           
             products.ForEach(_ =>
             {
-                _.Inventory -= dto.Where(d => d.ProductCode == _.Id).First().ProductCount;
+                int ProductCount = dto.Where(d => d.ProductCode == _.Id).First().ProductCount;
+
+                if (_.Inventory < ProductCount)
+                {
+                    throw new UnauthorizedNumberOfProductsPurchasedException();
+                }
+
+                _.Inventory -= ProductCount;
             });
 
             var salesInvoice = new SalesInvoice
