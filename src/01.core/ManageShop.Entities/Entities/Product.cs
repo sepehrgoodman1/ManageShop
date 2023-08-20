@@ -17,7 +17,7 @@ namespace ManageShop.Entities.Entities
         public string Title { get; set; }
         public int MinimumInventory { get; set; }
         public int Inventory { get; set; } = 0;
-        public double Price { get; set; }
+        public double Price { get; set; } // delte shavad
         public ProductStatus Status { get; set; }
         public int ProductGroupId { get; set; }
         public ProductGroup ProductGroup { get; set; }

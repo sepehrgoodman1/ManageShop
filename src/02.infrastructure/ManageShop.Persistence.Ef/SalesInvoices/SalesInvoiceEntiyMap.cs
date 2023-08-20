@@ -18,6 +18,7 @@ namespace ManageShop.Persistence.Ef.SalesInvoices
             _.Property(_ => _.Id).ValueGeneratedOnAdd().IsRequired();
             _.Property(_ => _.TotalSales).IsRequired();
             _.Property(_ => _.ClientName).IsRequired();
+            _.Property(_ => _.TotalProductCount).IsRequired();
             _.Property(_ => _.Date).IsRequired();
         }
     }

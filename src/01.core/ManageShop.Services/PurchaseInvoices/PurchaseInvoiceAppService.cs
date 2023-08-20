@@ -34,7 +34,7 @@ namespace ManageShop.Services.PurchaseInvoices
 
             var products = await _productRepository.FindAllByIds(dto.Select(_ => _.ProductCode).ToList());
 
-            if(! products.Any()) 
+            if(! products.Any() || products.Count != dto.Count) 
             {
                 throw new InvalidProductCodeException();
             }

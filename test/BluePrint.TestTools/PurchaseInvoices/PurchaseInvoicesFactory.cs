@@ -41,7 +41,8 @@ namespace BluePrint.TestTools.PurchaseInvoices
                 {
                      ProductCode = productCode,
                      ProductRecivedCount = productRecivedCount,
-                }
+                },
+
             };
         }
 

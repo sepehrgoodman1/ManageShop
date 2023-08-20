@@ -16,8 +16,11 @@ namespace ManageShop.Persistence.Ef.AccountingDocuments
             _.ToTable("AccountingDocuments");
             _.HasKey(_ => _.Id);
             _.Property(_ => _.Id).ValueGeneratedOnAdd().IsRequired();
-            _.Property(_ => _.SalesInvoiceId).IsRequired();
             _.Property(_ => _.TotalPrice).IsRequired();
+            _.HasOne(_ => _.SalesInvoice).WithOne(_ => _.AccountingDocument).
+                HasForeignKey<AccountingDocument>(_ => _.SalesInvoiceId);
+
+            _.Property(_ => _.SalesInvoiceId).IsRequired();
         }
     }
 }
