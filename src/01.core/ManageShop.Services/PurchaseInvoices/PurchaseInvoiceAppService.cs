@@ -3,13 +3,6 @@ using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.Products.Exception;
 using ManageShop.Services.PurchaseInvoices.Contracts;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
-using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Taav.Contracts.Interfaces;
 
 namespace ManageShop.Services.PurchaseInvoices
@@ -43,7 +36,11 @@ namespace ManageShop.Services.PurchaseInvoices
 
             products.ForEach(_ =>
             {
-                if (dto.Where(d => d.ProductCode == _.Id).FirstOrDefault().ProductRecivedCount > _.MinimumInventory)
+                if(dto.Where(d => d.ProductCode == _.Id).FirstOrDefault().ProductRecivedCount <= 0)
+                {
+                    _.Status = ProductStatus.UnAvailable;
+                }
+                else if (dto.Where(d => d.ProductCode == _.Id).FirstOrDefault().ProductRecivedCount > _.MinimumInventory)
                 {
                     _.Status = ProductStatus.Available;
                 }
@@ -51,11 +48,7 @@ namespace ManageShop.Services.PurchaseInvoices
                 {
                     _.Status = ProductStatus.ReadyToOrder;
                 }
-                else
-                {
-                    _.Status = ProductStatus.UnAvailable;
                 }
-            }
             );
 
             var purchaseInvoice =  new PurchaseInvoice
@@ -90,6 +83,22 @@ namespace ManageShop.Services.PurchaseInvoices
                         ProductGroupId = _.Products.ProductGroupId,
                         ProductGroupName = _.Products.ProductGroup.Name,
                     }).ToList();
+        }
+
+        public async Task<List<GetPurchaseInvoiceDto>> Search(string search)
+        {
+            return (await _purchaseInvoiceRepository.Search(search))
+                   .SelectMany(_ => _.ProductPurchaseInvoices)
+                   .Select(_ =>  new GetPurchaseInvoiceDto
+                   {
+                       ProductCode = _.Products.Id,
+                       Title = _.Products.Title,
+                       MinimumInventory = _.Products.MinimumInventory,
+                       Inventory = _.Products.Inventory,
+                       Status = _.Products.Status.ToString(),
+                       ProductGroupId = _.Products.ProductGroupId,
+                       ProductGroupName = _.Products.ProductGroup.Name,
+                   }).ToList();
         }
     }
     }

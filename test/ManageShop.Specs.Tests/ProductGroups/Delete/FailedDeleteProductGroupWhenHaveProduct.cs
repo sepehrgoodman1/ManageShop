@@ -6,11 +6,6 @@ using FluentAssertions;
 using ManageShop.Entities.Entities;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Exception;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Specs.Tests.ProductGroups.Delete
 {

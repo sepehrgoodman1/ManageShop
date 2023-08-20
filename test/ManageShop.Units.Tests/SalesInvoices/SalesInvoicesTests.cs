@@ -8,11 +8,6 @@ using ManageShop.Entities.Entities;
 using ManageShop.Services.SalesInvoices.Contracts;
 using ManageShop.Services.SalesInvoices.Exception;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Units.Tests.SalesInvoices
 {

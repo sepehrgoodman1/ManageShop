@@ -7,11 +7,6 @@ using ManageShop.Entities.Entities;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
 using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 
 namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
@@ -37,7 +32,7 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
      ]
 
         // scenario
-        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا اماده سفارش باشد")]
+        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا اماده سفارش باشد برای حالتی که حداقل موجودی با موجودی برابر باشد")]
 
         [Given(" یک کالا با کد کالا 1 و تعداد موجودی 5 عدد و حداقل موجودی 10 و وضعیت اماده سفارش در فهرست کالاها وجود دارد")]
         private void Given()

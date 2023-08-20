@@ -1,5 +1,4 @@
 ﻿using ManageShop.Entities.Entities;
-using ManageShop.Services.Products.Contracts.Dtos;
 
 namespace ManageShop.Services.Products.Contracts
 {

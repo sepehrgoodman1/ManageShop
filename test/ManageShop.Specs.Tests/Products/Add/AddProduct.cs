@@ -1,13 +1,6 @@
 ﻿using BluePrint.TestTools.Infrastructure.DataBaseConfig.Integration;
 using BluePrint.TestTools.ProductGroups;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.ProductGroups.Contracts.Dtos;
-using ManageShop.Services.ProductGroups.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BluePrint.TestTools.Products;
 using FluentAssertions;
 using ManageShop.Services.Products.Contracts;

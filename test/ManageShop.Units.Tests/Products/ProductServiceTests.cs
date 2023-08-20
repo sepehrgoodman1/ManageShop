@@ -7,11 +7,6 @@ using ManageShop.Entities.Entities;
 using ManageShop.Services.ProductGroups.Exception;
 using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.Products.Exception;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Units.Tests.Products
 {

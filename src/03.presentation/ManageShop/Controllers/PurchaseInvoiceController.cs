@@ -1,9 +1,6 @@
-﻿using ManageShop.Services.Products.Contracts;
-using ManageShop.Services.PurchaseInvoices.Contracts;
+﻿using ManageShop.Services.PurchaseInvoices.Contracts;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace ManageShop.Apis.Controllers
 {
@@ -22,6 +19,12 @@ namespace ManageShop.Apis.Controllers
         public async Task<List<GetPurchaseInvoiceDto>> GetAll()
         {
             return await _service.GetAll();
+        }
+
+        [HttpGet("search-purchase-invoices")]
+        public async Task<List<GetPurchaseInvoiceDto>> Search(string search)
+        {
+            return await _service.Search(search);
         }
 
         [HttpPost("add-purchase-invoice")]

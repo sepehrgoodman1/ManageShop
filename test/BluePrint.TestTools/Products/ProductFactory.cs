@@ -1,13 +1,6 @@
 ﻿using ManageShop.Entities.Entities;
 using ManageShop.Persistence.Ef.ProductGroups;
 using ManageShop.Persistence.Ef;
-using ManageShop.Services.ProductGroups.Contracts.Dtos;
-using ManageShop.Services.ProductGroups;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ManageShop.Persistence.Ef.Productss;
 using ManageShop.Services.Products.Contracts.Dtos;
 using ManageShop.Services.Products;
@@ -38,7 +31,6 @@ namespace BluePrint.TestTools.Products
             {
                 ProductGroupId = productGroupId,
                 Title = title,
-                Price = price,
                 MinimumInventory = minimumInventory,
             };
         }

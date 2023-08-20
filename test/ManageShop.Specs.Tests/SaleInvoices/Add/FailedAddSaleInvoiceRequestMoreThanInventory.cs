@@ -6,12 +6,6 @@ using BluePrint.TestTools.SaleInvoices;
 using ManageShop.Entities.Entities;
 using ManageShop.Services.SalesInvoices.Contracts.Dtos;
 using ManageShop.Services.SalesInvoices.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using ManageShop.Services.SalesInvoices.Exception;
 

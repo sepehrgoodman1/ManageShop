@@ -1,6 +1,5 @@
 ﻿using ManageShop.Entities.Entities;
 using ManageShop.Services.Products.Contracts;
-using ManageShop.Services.Products.Contracts.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManageShop.Persistence.Ef.Productss

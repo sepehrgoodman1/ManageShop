@@ -1,11 +1,7 @@
 ﻿using ManageShop.Entities.Entities;
 using ManageShop.Services.PurchaseInvoices.Contracts;
+using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Persistence.Ef.PurchaseInvoics
 {
@@ -26,7 +22,18 @@ namespace ManageShop.Persistence.Ef.PurchaseInvoics
         public async Task<List<PurchaseInvoice>> GetAll()
         {
             return await _purchaseInvoices.Include(_ => _.ProductPurchaseInvoices)
-                                          .ThenInclude(_=>_.Products.ProductGroup).ToListAsync();
+                                          .ThenInclude(_=>_.Products.ProductGroup)
+                                          .ToListAsync();
+        }
+
+        public async Task<List<PurchaseInvoice>> Search(string search)
+        {
+            var x = _purchaseInvoices.Include(_ => _.ProductPurchaseInvoices)
+                                           .ThenInclude(_ => _.Products.ProductGroup)
+                                           .ToList();
+
+            return x.Where(_ => _.ProductPurchaseInvoices.Select(_ => _.Products.Title).Contains(search) ||
+                                _.ProductPurchaseInvoices.Select(_ => _.Products.Status.ToString()).Contains(search)).ToList();
         }
     }
 }

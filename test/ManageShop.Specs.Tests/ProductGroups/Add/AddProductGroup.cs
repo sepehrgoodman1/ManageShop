@@ -2,16 +2,8 @@
 using BluePrint.TestTools.ProductGroups;
 using FluentAssertions;
 using ManageShop.Entities.Entities;
-using ManageShop.Persistence.Ef;
-using ManageShop.Persistence.Ef.ProductGroups;
-using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Contracts.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Specs.Tests.ProductGroups.Add
 {

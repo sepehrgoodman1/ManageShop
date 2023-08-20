@@ -4,15 +4,9 @@ using BluePrint.TestTools.ProductGroups;
 using BluePrint.TestTools.Products;
 using FluentAssertions;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Contracts.Dtos;
 using ManageShop.Services.ProductGroups.Exception;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Units.Tests.ProductGroups
 {

@@ -8,11 +8,6 @@ using ManageShop.Entities.Entities;
 using ManageShop.Services.Products.Exception;
 using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageShop.Units.Tests.PurchaseInvoices
 {
@@ -113,6 +108,30 @@ namespace ManageShop.Units.Tests.PurchaseInvoices
 
             actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should()
                 .Be(ProductStatus.ReadyToOrder);
+        }
+
+        [Fact]
+        public async Task Add_add_a_purachase_invoice_ready_to_order_status_unavailable()
+        {
+            var productGroup = ProductGroupFactory.Create("لبنیات");
+            var product = ProductFactory.Create(productGroup, "شیر",
+                inventory: 0, minimumInventory: 10);
+            DbContext.Save(product);
+            var dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 0);
+
+            await _sut.Add(dto);
+
+            var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
+                .ThenInclude(_ => _.Products).Single();
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Id
+                .Should().Be(product.Id);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First()
+                .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
+
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should()
+                .Be(ProductStatus.UnAvailable);
         }
     }
 }

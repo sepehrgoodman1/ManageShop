@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using ManageShop.Infrastucture.Queries;
 
 namespace ManageShop.Specs.Tests

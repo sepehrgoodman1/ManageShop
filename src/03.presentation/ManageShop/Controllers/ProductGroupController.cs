@@ -1,7 +1,5 @@
-﻿using ManageShop.Entities.Entities;
-using ManageShop.Services.ProductGroups.Contracts;
+﻿using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.ProductGroups.Contracts.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManageShop.Apis.Controllers

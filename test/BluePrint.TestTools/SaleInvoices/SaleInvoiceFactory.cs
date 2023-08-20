@@ -1,17 +1,7 @@
 ﻿using ManageShop.Persistence.Ef.Productss;
-using ManageShop.Persistence.Ef.PurchaseInvoics;
 using ManageShop.Persistence.Ef;
-using ManageShop.Services.PurchaseInvoices;
 using ManageShop.Services.SalesInvoices;
-using ManageShop.Services.SalesInvoices.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ManageShop.Services.SalesInvoices.Contracts.Dtos;
-using ManageShop.Entities.Entities;
-using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
 using ManageShop.Persistence.Ef.SalesInvoices;
 using ManageShop.Persistence.Ef.AccountingDocuments;
 

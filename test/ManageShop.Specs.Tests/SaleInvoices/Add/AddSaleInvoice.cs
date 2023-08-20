@@ -2,19 +2,10 @@
 using BluePrint.TestTools.Infrastructure.DataBaseConfig.Integration;
 using BluePrint.TestTools.ProductGroups;
 using BluePrint.TestTools.Products;
-using BluePrint.TestTools.PurchaseInvoices;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
-using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using ManageShop.Services.SalesInvoices.Contracts;
-using ManageShop.Services.SalesInvoices;
 using ManageShop.Services.SalesInvoices.Contracts.Dtos;
 using BluePrint.TestTools.SaleInvoices;
 

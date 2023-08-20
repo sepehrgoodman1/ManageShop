@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace ManageShop.Infrastucture.Queries;
 
 public static class EnumerableHelper

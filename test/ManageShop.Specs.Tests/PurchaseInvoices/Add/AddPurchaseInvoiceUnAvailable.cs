@@ -3,22 +3,27 @@ using BluePrint.TestTools.Infrastructure.DataBaseConfig.Integration;
 using BluePrint.TestTools.ProductGroups;
 using BluePrint.TestTools.Products;
 using BluePrint.TestTools.PurchaseInvoices;
-using FluentAssertions;
 using ManageShop.Entities.Entities;
-using ManageShop.Services.PurchaseInvoices.Contracts;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
+using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
 {
-    public class AddPurchaseInvoiceAvailable : BusinessIntegrationTest
+    public class AddPurchaseInvoiceUnAvailable : BusinessIntegrationTest
     {
         private ProductGroup productGroup;
         private Product product;
         private List<AddPurchaseInvoiceDto> dto;
         private readonly PurchaseInvoiceService _sut;
 
-        public AddPurchaseInvoiceAvailable()
+        public AddPurchaseInvoiceUnAvailable()
         {
             _sut = PurchaseInvoicesFactory.CreateService(SetupContext);
         }
@@ -32,39 +37,39 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
      ]
 
         // scenario
-        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا موجود باشد")]
+        [Scenario("ثبت ورود کالا وقتی که وضعیت کالا ناموجود باشد ")]
 
-        [Given(" یک کالا با کد کالا 1 و تعداد موجودی 7 عدد و حداقل موجودی 5 و وضعیت موجود در فهرست کالاها وجود دارد")]
+        [Given(" یک کالا با کد کالا 1 و تعداد موجودی 0 عدد و حداقل موجودی 10 و وضعیت اماده سفارش در فهرست کالاها وجود دارد")]
         private void Given()
         {
             productGroup = ProductGroupFactory.Create("لبنیات");
-            product = ProductFactory.Create(productGroup, "شیر", inventory: 7,
-                minimumInventory: 5, productStatus: ProductStatus.Available);
+            product = ProductFactory.Create(productGroup, "شیر", inventory: 0,
+                minimumInventory: 10, productStatus: ProductStatus.ReadyToOrder);
             DbContext.Save(product);
         }
 
-        [When("بیست عدد کالا با کد 1 را در تاریخ 1402/05/08 به فهرست کالاهای با کد 1 اضافه می کنم")]
+        [When(" صفر عدد کالا با کد 1 را در تاریخ 08/05/1402 به فهرست کالاهای با کد 1 اضافه می کنم")]
         private async Task When()
         {
-            
-            dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 20);
+
+            dto = PurchaseInvoicesFactory.CreateAddDto(product.Id, 0);
 
             await _sut.Add(dto);
         }
 
-        [Then(" باید 27 عدد کالا با کد 1 و تاریخ 05/08 /1402 را در فهرست کالاها داشته باشد")]
-        [And(" وضعیت کالا با کد 1 موجود باشد")]
+        [Then(" باید 0 عدد کالا با کد 1 و تاریخ 08/05/1402 را در فهرست کالاها داشته باشد")]
+        [And(" وضعیت کالا با کد 1 اماده سفارش باشد")]
         private void Then()
         {
             var actual = ReadContext.Set<PurchaseInvoice>().Include(_ => _.ProductPurchaseInvoices)
                 .ThenInclude(_ => _.Products).Single();
 
-            actual.ProductPurchaseInvoices.Select(_=>_.Products).First().Id.Should().Be(product.Id);
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Id.Should().Be(product.Id);
 
-            actual.ProductPurchaseInvoices.Select(_=>_.Products).First()
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First()
                 .Inventory.Should().Be(product.Inventory + dto.First().ProductRecivedCount);
 
-            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should().Be(ProductStatus.Available);
+            actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should().Be(ProductStatus.UnAvailable);
 
             // Date
         }
@@ -78,6 +83,4 @@ namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
                 _ => Then());
         }
     }
-
-
 }

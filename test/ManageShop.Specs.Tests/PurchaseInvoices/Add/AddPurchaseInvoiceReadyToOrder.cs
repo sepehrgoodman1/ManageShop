@@ -7,11 +7,6 @@ using ManageShop.Entities.Entities;
 using ManageShop.Services.PurchaseInvoices.Contracts.Dtos;
 using ManageShop.Services.PurchaseInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 
 namespace ManageShop.Specs.Tests.PurchaseInvoices.Add
