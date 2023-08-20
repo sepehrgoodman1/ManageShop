@@ -22,5 +22,11 @@ namespace ManageShop.Persistence.Ef.PurchaseInvoics
         {
             await _purchaseInvoices.AddAsync(purchaseInvoice);
         }
+
+        public async Task<List<PurchaseInvoice>> GetAll()
+        {
+            return await _purchaseInvoices.Include(_ => _.ProductPurchaseInvoices)
+                                          .ThenInclude(_=>_.Products.ProductGroup).ToListAsync();
+        }
     }
 }

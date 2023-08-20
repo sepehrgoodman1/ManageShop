@@ -17,14 +17,13 @@ namespace ManageShop.Entities.Entities
         public string Title { get; set; }
         public int MinimumInventory { get; set; }
         public int Inventory { get; set; } = 0;
-        public double Price { get; set; } // delte shavad
         public ProductStatus Status { get; set; }
         public int ProductGroupId { get; set; }
         public ProductGroup ProductGroup { get; set; }
         public HashSet<ProductPurchaseInvoice> ProductPurchaseInvoices { get; set; }
         public HashSet<ProductSalesInvoice> ProductSalesInvoices { get; set; }
     }
-    public enum ProductStatus
+    public enum ProductStatus : int
     {
         Available = 2,
         ReadyToOrder = 1,

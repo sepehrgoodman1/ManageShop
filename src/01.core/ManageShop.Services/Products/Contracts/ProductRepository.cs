@@ -1,4 +1,5 @@
 ﻿using ManageShop.Entities.Entities;
+using ManageShop.Services.Products.Contracts.Dtos;
 
 namespace ManageShop.Services.Products.Contracts
 {
@@ -10,5 +11,6 @@ namespace ManageShop.Services.Products.Contracts
         Task<bool> IsExistTitle(string title, int productGroupId);
         void Update(List<Product> products);
         Task<Product> GetById(int id);
+        Task<List<Product>> GetAll();
     }
 }

@@ -7,6 +7,7 @@ namespace ManageShop.Services.ProductGroups.Contracts
     {
         Task Add(ProductGroup productGroup);
         void Delete(ProductGroup productGroup);
+        Task<List<ProductGroup>> GetAll();
         Task<ProductGroup> GetById(int id);
         Task<bool> IsExistByName(string name);
     }

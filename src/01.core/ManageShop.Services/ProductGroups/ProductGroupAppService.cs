@@ -25,7 +25,7 @@ namespace ManageShop.Services.ProductGroups
         {
             var productGroup = new ProductGroup
             {
-                Name = dto.Name,
+                Name = dto.Name.Replace(" ",""),
             };
 
             if(await _repository.IsExistByName(productGroup.Name))
@@ -48,7 +48,6 @@ namespace ManageShop.Services.ProductGroups
             {
                 throw new ProductGroupNotFoundException();
             }
-
             
             if(await _productRepository.HaveProduct(id))
             {
@@ -59,6 +58,14 @@ namespace ManageShop.Services.ProductGroups
 
             await _unitOfWork.Complete();
 
+        }
+
+        public async Task<List<GetProductGroupDto>> GetAll()
+        {
+            return (await _repository.GetAll()).Select(_ => new GetProductGroupDto
+            {
+                Name = _.Name,
+            }).ToList();
         }
 
         public async Task Update(int id, AddProductGroupDto dto)

@@ -26,7 +26,6 @@ namespace BluePrint.TestTools.Products
                 ProductGroup = productGroup,
                 Title = title,
                 Inventory = inventory,
-                Price = price,
                 MinimumInventory = minimumInventory,
                 Status = productStatus,
             };

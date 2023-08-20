@@ -1,14 +1,18 @@
 using ManageShop.Persistence.Ef;
+using ManageShop.Persistence.Ef.AccountingDocuments;
 using ManageShop.Persistence.Ef.ProductGroups;
 using ManageShop.Persistence.Ef.Productss;
 using ManageShop.Persistence.Ef.PurchaseInvoics;
-
+using ManageShop.Persistence.Ef.SalesInvoices;
+using ManageShop.Services.AccountingDocuments.Contracts;
 using ManageShop.Services.ProductGroups;
 using ManageShop.Services.ProductGroups.Contracts;
 using ManageShop.Services.Products;
 using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.PurchaseInvoices;
 using ManageShop.Services.PurchaseInvoices.Contracts;
+using ManageShop.Services.SalesInvoices;
+using ManageShop.Services.SalesInvoices.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Taav.Contracts.Interfaces;
 
@@ -19,11 +23,17 @@ builder.Services.AddDbContext<EFDataContext>(options => options.UseSqlServer(bui
 
 builder.Services.AddScoped<ProductGroupService, ProductGroupAppService>();
 builder.Services.AddScoped<ProductGroupRepository, EFProductGroupRepository>();
+
 builder.Services.AddScoped<ProductService, ProductAppService>();
 builder.Services.AddScoped<ProductRepository, EFProductRepository>();
+
 builder.Services.AddScoped<PurchaseInvoiceService, PurchaseInvoiceAppService>();
 builder.Services.AddScoped<PurchaseInvoiceRepository, EFPurchaseInvoiceRepository>();
 
+builder.Services.AddScoped<SaleInvoiceService, SaleInvoiceAppService>();
+builder.Services.AddScoped<SalesInvoiceRepository, EFSalesInvoiceRepository>();
+
+builder.Services.AddScoped<AccountingDocumentRepository, EFAccountingDocumentRepository>();
 
 builder.Services.AddScoped<UnitOfWork, EFUnitOfWork>();
 

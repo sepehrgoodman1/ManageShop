@@ -10,5 +10,6 @@ namespace ManageShop.Services.PurchaseInvoices.Contracts
     public interface PurchaseInvoiceService
     {
         Task<int> Add(List<AddPurchaseInvoiceDto> dto);
+        Task<List<GetPurchaseInvoiceDto>> GetAll();
     }
 }

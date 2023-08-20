@@ -37,7 +37,6 @@ namespace ManageShop.Units.Tests.Products
             result.Title.Should().Be(dto.Title);
             result.ProductGroupId.Should().Be(productGroup.Id);
             result.MinimumInventory.Should().Be(dto.MinimumInventory);
-            result.Price.Should().Be(dto.Price);
         }
 
         [Theory]
@@ -86,7 +85,6 @@ namespace ManageShop.Units.Tests.Products
             actual.Title.Should().Be(product.Title);
             actual.Id.Should().Be(product.Id);
             actual.MinimumInventory.Should().Be(product.MinimumInventory);
-            actual.Price.Should().Be(product.Price);
 
         }
     }

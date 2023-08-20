@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace ManageShop.Migrations.Migrations
 {
-    [Migration(202308200818)]
-    public class _202308200818AddColumnTotalProductCount : Migration
+    [Migration(202320081634)]
+    public class _202320081634DeletePriceColumn : Migration
     {
         public override void Up()
         {
-            Create.Column("TotalProductCount").OnTable("SalesInvoices").AsInt32()
-                .NotNullable();
+            Delete.Column("Price").FromTable("Products");
         }
 
         public override void Down()
         {
-            Delete.Column("TotalProductCount").FromTable("SalesInvoices");
-        }
+            Create.Column("Price").OnTable("Products").AsDouble().NotNullable();
 
-    
+        }
     }
 }

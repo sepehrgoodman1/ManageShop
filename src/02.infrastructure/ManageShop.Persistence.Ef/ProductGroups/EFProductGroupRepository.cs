@@ -26,6 +26,11 @@ namespace ManageShop.Persistence.Ef.ProductGroups
              _productGroups.Remove(productGroup);
         }
 
+        public async Task<List<ProductGroup>> GetAll()
+        {
+            return await _productGroups.ToListAsync();
+        }
+
         public async Task<ProductGroup> GetById(int id)
         {
             return await _productGroups.FindAsync(id);
@@ -33,7 +38,7 @@ namespace ManageShop.Persistence.Ef.ProductGroups
 
         public async Task<bool> IsExistByName(string name)
         {
-            return await _productGroups.AnyAsync(_ => _.Name == name);
+            return await _productGroups.AnyAsync(_ => _.Name.ToUpper() == name.ToUpper().Replace(" ", ""));
         }
 
        

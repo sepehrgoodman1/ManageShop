@@ -60,7 +60,6 @@ namespace ManageShop.Specs.Tests.Products.Add
             result.Title.Should().Be(dto.Title);
             result.ProductGroupId.Should().Be(productGroup.Id);
             result.MinimumInventory.Should().Be(dto.MinimumInventory);
-            result.Price.Should().Be(dto.Price);
         }
 
         [Fact]

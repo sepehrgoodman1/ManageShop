@@ -36,7 +36,7 @@ namespace ManageShop.Services.Products
                 throw new DuplicateProductNameInProductGroupException();
             }
 
-            if (dto.MinimumInventory < 0 || dto.Price < 0)
+            if (dto.MinimumInventory < 0 )
             {
                 throw new InvalidPriceOrMinimumInventoryException();
             }
@@ -46,12 +46,24 @@ namespace ManageShop.Services.Products
                 Title = dto.Title,
                 ProductGroupId = dto.ProductGroupId,
                 MinimumInventory = dto.MinimumInventory,
-                Price = dto.Price,
             };
 
             await _repository.Add(product);
 
             await _unitOfWork.Complete();
+        }
+
+        public async Task<List<GetProductDto>> GetAll()
+        {
+            return (await _repository.GetAll()).Select(_ => new GetProductDto
+            {
+                Title = _.Title,
+                Inventory = _.Inventory,
+                MinimumInventory = _.MinimumInventory,
+                Status = _.Status,
+                ProductGroupId = _.ProductGroupId,
+
+            }).ToList();
         }
     }
 }

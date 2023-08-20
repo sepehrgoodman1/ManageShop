@@ -74,9 +74,23 @@ namespace ManageShop.Services.PurchaseInvoices
             await _unitOfWork.Complete();
 
             return purchaseInvoice.Id;
-
-
         }
+
+        public async Task<List<GetPurchaseInvoiceDto>> GetAll()
+        {
+            return (await _purchaseInvoiceRepository.GetAll())
+                    .SelectMany(_ => _.ProductPurchaseInvoices)
+                    .Select(_=> new GetPurchaseInvoiceDto
+                    {
+                        ProductCode = _.Products.Id,
+                        Title = _.Products.Title,
+                        MinimumInventory = _.Products.MinimumInventory,
+                        Inventory = _.Products.Inventory,
+                        Status = _.Products.Status.ToString(),
+                        ProductGroupId = _.Products.ProductGroupId,
+                        ProductGroupName = _.Products.ProductGroup.Name,
+                    }).ToList();
         }
+    }
     }
 

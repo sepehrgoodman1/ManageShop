@@ -1,4 +1,5 @@
-﻿using ManageShop.Services.ProductGroups.Contracts.Dtos;
+﻿using ManageShop.Entities.Entities;
+using ManageShop.Services.ProductGroups.Contracts.Dtos;
 
 namespace ManageShop.Services.ProductGroups.Contracts
 {
@@ -6,6 +7,7 @@ namespace ManageShop.Services.ProductGroups.Contracts
     {
         Task<int> Add(AddProductGroupDto dto);
         Task Delete(int id);
+        Task<List<GetProductGroupDto>> GetAll();
         Task Update(int id, AddProductGroupDto dto);
     }
 }

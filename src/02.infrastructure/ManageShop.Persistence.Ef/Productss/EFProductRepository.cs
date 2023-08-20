@@ -1,5 +1,6 @@
 ﻿using ManageShop.Entities.Entities;
 using ManageShop.Services.Products.Contracts;
+using ManageShop.Services.Products.Contracts.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManageShop.Persistence.Ef.Productss
@@ -21,6 +22,11 @@ namespace ManageShop.Persistence.Ef.Productss
         public  async Task<List<Product>> FindAllByIds(List<int> enumerable)
         {
             return await _products.Where(_ => enumerable.Contains(_.Id)).ToListAsync();
+        }
+
+        public async Task<List<Product>> GetAll()
+        {
+            return await _products.ToListAsync();
         }
 
         public async Task<Product> GetById(int id)

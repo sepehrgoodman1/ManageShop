@@ -5,5 +5,6 @@ namespace ManageShop.Services.Products.Contracts
     public interface ProductService
     {
         Task Add(AddProductDto dto);
+        Task<List<GetProductDto>> GetAll();
     }
 }
