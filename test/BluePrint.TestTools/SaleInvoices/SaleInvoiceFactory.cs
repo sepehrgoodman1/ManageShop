@@ -19,7 +19,7 @@ namespace BluePrint.TestTools.SaleInvoices
             var unitOfWork = new EFUnitOfWork(context);
 
             return new SaleInvoiceAppService(unitOfWork, productRepos,
-                saleInvoiceRep, AccountDocumentRepos, date);
+                saleInvoiceRep, AccountDocumentRepos);
 
         }
         public static List<AddSaleInvoiceDto> CreateAddDtoTwo(int ProductCode1,

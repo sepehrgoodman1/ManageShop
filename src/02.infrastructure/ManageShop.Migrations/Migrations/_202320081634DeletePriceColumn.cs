@@ -12,7 +12,7 @@ namespace ManageShop.Migrations.Migrations
 
         public override void Down()
         {
-            Create.Column("Price").OnTable("Products").AsDouble().NotNullable();
+            Create.Column("Price").OnTable("Products").AsDouble().Nullable();
 
         }
     }

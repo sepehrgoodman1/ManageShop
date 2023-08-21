@@ -20,16 +20,16 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
         private Product product1;
         private Product product2;
         private List<AddSaleInvoiceDto> dto;
-        private  DateTime _date;
-        private readonly SaleInvoiceService _sut;
+/*        private  DateTime _date;
+*/        private readonly SaleInvoiceService _sut;
 
         public AddSaleInvoice()
         {
-            var dateTime = new Mock<DateTimeGenerator>();
+            /*var dateTime = new Mock<DateTimeGenerator>();
             dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
-            _date = dateTime.Object.Generate();
+            _date = dateTime.Object.Generate();*/
 
-            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
+            _sut = SaleInvoiceFactory.CreateService(SetupContext);
         }
 
      

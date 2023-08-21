@@ -21,15 +21,15 @@ namespace ManageShop.Services.SalesInvoices
         public SaleInvoiceAppService(UnitOfWork unitOfWork,
                                     ProductRepository productRepository,
                                     SalesInvoiceRepository salesInvoiceRepository ,
-                                    AccountingDocumentRepository accountingDocumentRepository,
-                                    DateTimeGenerator date )
+                                    AccountingDocumentRepository accountingDocumentRepository
+                                    /*DateTimeGenerator date*/ )
         {
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
             _repository = salesInvoiceRepository;
             _accountingDocumentRepository = accountingDocumentRepository;
-            _date = date;
-        }
+/*            _date = date;
+*/        }
 
         public async Task Add(string clientName, List<AddSaleInvoiceDto> dto)
         {
@@ -56,7 +56,7 @@ namespace ManageShop.Services.SalesInvoices
             var salesInvoice = new SalesInvoice
             {
                 ClientName = clientName,
-                Date = _date.Generate(),
+                Date = DateTime.Now,
                 TotalSales = dto.Sum(_ => _.UnitPrice * _.ProductCount),
                 TotalProductCount = dto.Sum(_ => _.ProductCount),
             };
