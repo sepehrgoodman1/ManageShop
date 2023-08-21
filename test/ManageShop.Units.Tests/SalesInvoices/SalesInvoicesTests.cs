@@ -20,11 +20,11 @@ namespace ManageShop.Units.Tests.SalesInvoices
         private readonly SaleInvoiceService _sut;
         public SalesInvoicesTests()
         {
-            var dateTime = new Mock<DateTimeGenerator>();
+          /*  var dateTime = new Mock<DateTimeGenerator>();
             dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
-            _date = dateTime.Object.Generate();
+            _date = dateTime.Object.Generate();*/
 
-            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
+            _sut = SaleInvoiceFactory.CreateService(SetupContext);
         }
 
         [Fact]

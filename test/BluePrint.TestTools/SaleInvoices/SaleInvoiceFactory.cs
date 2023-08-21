@@ -10,7 +10,7 @@ namespace BluePrint.TestTools.SaleInvoices
 {
     public static class SaleInvoiceFactory
     {
-        public static SaleInvoiceAppService CreateService(EFDataContext context, DateTimeGenerator date)
+        public static SaleInvoiceAppService CreateService(EFDataContext context)
         {
 
             var productRepos = new EFProductRepository(context);

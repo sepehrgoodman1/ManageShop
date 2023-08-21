@@ -29,7 +29,7 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
             dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
             _date = dateTime.Object.Generate();
 
-            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
+            _sut = SaleInvoiceFactory.CreateService(SetupContext);
         }
 
         //User Story
