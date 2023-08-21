@@ -20,6 +20,25 @@ namespace ManageShop.Units.Tests.Products
         }
 
         [Fact]
+        public async Task GetAll()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            var product = ProductFactory.Create(productGroup);
+            DbContext.Save(product);
+
+            // Act
+            var _expected = await _sut.GetAll();
+
+            // Assert
+            _expected.Single().Title.Should().Be(product.Title);
+            _expected.Single().Inventory.Should().Be(product.Inventory);
+            _expected.Single().MinimumInventory.Should().Be(product.MinimumInventory);
+            _expected.Single().Status.Should().Be(product.Status);
+            _expected.Single().ProductGroupId.Should().Be(product.ProductGroup.Id);
+        }
+
+        [Fact]
         public async Task Add_add_product()
         {
             var productGroup = ProductGroupFactory.Create("لبنیات");
@@ -48,15 +67,14 @@ namespace ManageShop.Units.Tests.Products
         }
 
         [Theory]
-        [InlineData(-1 , 1)]
-        [InlineData(1 , -1)]
+        [InlineData( -1)]
         public async Task Add_add_product_invalid_price_minimuminventory_exception(
-            int invalidPrice,int invalidMinimumInventory)
+            int invalidMinimumInventory)
         {
             var productGroup = ProductGroupFactory.Create("لبنیات");
             DbContext.Save(productGroup);
             var dto = ProductFactory.CreateAddDto(productGroup.Id, "شیر",
-                invalidPrice, invalidMinimumInventory);
+                invalidMinimumInventory);
 
             var result = () => _sut.Add(dto);
 

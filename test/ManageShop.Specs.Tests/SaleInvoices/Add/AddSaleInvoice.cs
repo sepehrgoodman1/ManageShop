@@ -8,6 +8,9 @@ using FluentAssertions;
 using ManageShop.Services.SalesInvoices.Contracts;
 using ManageShop.Services.SalesInvoices.Contracts.Dtos;
 using BluePrint.TestTools.SaleInvoices;
+using Castle.Core.Resource;
+using Moq;
+using ManageShop.Services.DateGenerator;
 
 namespace ManageShop.Specs.Tests.SaleInvoices.Add
 {
@@ -17,11 +20,16 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
         private Product product1;
         private Product product2;
         private List<AddSaleInvoiceDto> dto;
+        private  DateTime _date;
         private readonly SaleInvoiceService _sut;
 
         public AddSaleInvoice()
         {
-            _sut = SaleInvoiceFactory.CreateService(SetupContext);
+            var dateTime = new Mock<DateTimeGenerator>();
+            dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
+            _date = dateTime.Object.Generate();
+
+            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
         }
 
      
@@ -45,6 +53,9 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
 
             product2 = ProductFactory.Create(productGroup, "ماست", inventory: 35, minimumInventory: 5);
             DbContext.SaveRange(product1, product2);
+
+       
+
         }
 
         [When("مشتری با نام 'سپهر' کالا با کد 1 و تعداد 20 عدد را در تاریخ 08/05/1402 با قیمت هر واحد 100 هزار تومن و" +
@@ -69,13 +80,18 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
 
             var actualProduct = ReadContext.Set<Product>();
             actualProduct.Find(product1.Id).Inventory.Should().Be(10);
+            actualProduct.Find(product1.Id).Title.Should().Be(product1.Title);
+            actualProduct.Find(product1.Id).Status.Should().Be(product1.Status);
             actualProduct.Find(product2.Id).Inventory.Should().Be(25);
+            actualProduct.Find(product2.Id).Title.Should().Be(product2.Title);
+            actualProduct.Find(product2.Id).Status.Should().Be(product2.Status);
 
             var actualDocument = ReadContext.Set<AccountingDocument>().Include(_ => _.SalesInvoice).Single();
             actualDocument.SalesInvoice.Id.Should().Be(actualSaleInvoice.Id);
             actualDocument.TotalPrice.Should().Be(dto.Sum(_ => _.UnitPrice * _.ProductCount));
+            actualDocument.Date.Should().Be(actualSaleInvoice.Date);
 
-            // Date
+
         }
 
         [Fact]

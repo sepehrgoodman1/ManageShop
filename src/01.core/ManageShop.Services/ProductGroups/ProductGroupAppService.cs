@@ -14,7 +14,8 @@ namespace ManageShop.Services.ProductGroups
         private readonly UnitOfWork _unitOfWork;
 
         public ProductGroupAppService(ProductGroupRepository repository,
-            UnitOfWork unitOfWork, ProductRepository productRepository)
+                                      UnitOfWork unitOfWork,
+                                      ProductRepository productRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;

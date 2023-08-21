@@ -23,17 +23,22 @@ namespace ManageShop.Persistence.Ef.PurchaseInvoics
         {
             return await _purchaseInvoices.Include(_ => _.ProductPurchaseInvoices)
                                           .ThenInclude(_=>_.Products.ProductGroup)
+                                          .OrderByDescending(_=>_.Date)
                                           .ToListAsync();
         }
 
-        public async Task<List<PurchaseInvoice>> Search(string search)
+        public  async Task<List<PurchaseInvoice>> Search(string search)
         {
-            var x = _purchaseInvoices.Include(_ => _.ProductPurchaseInvoices)
-                                           .ThenInclude(_ => _.Products.ProductGroup)
-                                           .ToList();
+            var finedResult = await _purchaseInvoices
+                                    .Include(_ => _.ProductPurchaseInvoices)
+                                    .ThenInclude(_ => _.Products.ProductGroup)
+                                    .Distinct()
+                                    .OrderByDescending(_ => _.Date)
+                                    .ToListAsync();
 
-            return x.Where(_ => _.ProductPurchaseInvoices.Select(_ => _.Products.Title).Contains(search) ||
-                                _.ProductPurchaseInvoices.Select(_ => _.Products.Status.ToString()).Contains(search)).ToList();
+            return finedResult.Where(_ => _.ProductPurchaseInvoices.Select(_ => _.Products.Title).Contains(search) ||
+                                     _.ProductPurchaseInvoices.Select(_ => _.Products.Status.ToString()).Contains(search) ||
+                                     _.ProductPurchaseInvoices.Select(_ => _.Products.ProductGroup.Name).Contains(search)).ToList();
         }
     }
 }

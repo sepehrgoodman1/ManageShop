@@ -1,5 +1,6 @@
 ﻿using ManageShop.Entities.Entities;
 using ManageShop.Services.AccountingDocuments.Contracts;
+using ManageShop.Services.DateGenerator;
 using ManageShop.Services.Products.Contracts;
 using ManageShop.Services.Products.Exception;
 using ManageShop.Services.SalesInvoices.Contracts;
@@ -15,14 +16,19 @@ namespace ManageShop.Services.SalesInvoices
         private readonly ProductRepository _productRepository;
         private readonly SalesInvoiceRepository _repository;
         private readonly AccountingDocumentRepository _accountingDocumentRepository;
+        private readonly DateTimeGenerator _date;
 
-        public SaleInvoiceAppService(UnitOfWork unitOfWork, ProductRepository productRepository
-            , SalesInvoiceRepository salesInvoiceRepository , AccountingDocumentRepository accountingDocumentRepository)
+        public SaleInvoiceAppService(UnitOfWork unitOfWork,
+                                    ProductRepository productRepository,
+                                    SalesInvoiceRepository salesInvoiceRepository ,
+                                    AccountingDocumentRepository accountingDocumentRepository,
+                                    DateTimeGenerator date )
         {
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
             _repository = salesInvoiceRepository;
             _accountingDocumentRepository = accountingDocumentRepository;
+            _date = date;
         }
 
         public async Task Add(string clientName, List<AddSaleInvoiceDto> dto)
@@ -50,20 +56,20 @@ namespace ManageShop.Services.SalesInvoices
             var salesInvoice = new SalesInvoice
             {
                 ClientName = clientName,
-                Date = DateTime.Now,
+                Date = _date.Generate(),
                 TotalSales = dto.Sum(_ => _.UnitPrice * _.ProductCount),
                 TotalProductCount = dto.Sum(_ => _.ProductCount),
             };
-            await _repository.Add(salesInvoice);
 
             var document = new AccountingDocument
             {
-                Date = DateTime.Now,
+                Date = salesInvoice.Date,
                 TotalPrice = salesInvoice.TotalSales,
                 SalesInvoice = salesInvoice,
             };
 
             await _accountingDocumentRepository.Add(document);
+            await _repository.Add(salesInvoice);
 
 
             await _unitOfWork.Complete();

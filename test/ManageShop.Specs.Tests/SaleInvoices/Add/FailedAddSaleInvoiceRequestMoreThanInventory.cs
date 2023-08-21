@@ -8,6 +8,9 @@ using ManageShop.Services.SalesInvoices.Contracts.Dtos;
 using ManageShop.Services.SalesInvoices.Contracts;
 using FluentAssertions;
 using ManageShop.Services.SalesInvoices.Exception;
+using ManageShop.Services.DateGenerator;
+using Moq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ManageShop.Specs.Tests.SaleInvoices.Add
 {
@@ -18,10 +21,15 @@ namespace ManageShop.Specs.Tests.SaleInvoices.Add
         private Product product2;
         private List<AddSaleInvoiceDto> dto;
         private Func<Task> _expedted;
+        private readonly DateTime _date;
         private readonly SaleInvoiceService _sut;
         public FailedAddSaleInvoiceRequestMoreThanInventory()
         {
-            _sut = SaleInvoiceFactory.CreateService(SetupContext);
+            var dateTime = new Mock<DateTimeGenerator>();
+            dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
+            _date = dateTime.Object.Generate();
+
+            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
         }
 
         //User Story

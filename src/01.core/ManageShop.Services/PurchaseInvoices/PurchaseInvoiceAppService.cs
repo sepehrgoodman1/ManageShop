@@ -13,9 +13,9 @@ namespace ManageShop.Services.PurchaseInvoices
         private readonly UnitOfWork _unitOfWork;
         private readonly ProductRepository _productRepository;
 
-        public PurchaseInvoiceAppService(
-            PurchaseInvoiceRepository purchaseInvoiceRepository,
-            UnitOfWork unitOfWork, ProductRepository productRepository)
+        public PurchaseInvoiceAppService(PurchaseInvoiceRepository purchaseInvoiceRepository,
+                                         UnitOfWork unitOfWork,
+                                         ProductRepository productRepository)
         {
             _purchaseInvoiceRepository = purchaseInvoiceRepository;
             _unitOfWork = unitOfWork;
@@ -48,7 +48,7 @@ namespace ManageShop.Services.PurchaseInvoices
                 {
                     _.Status = ProductStatus.ReadyToOrder;
                 }
-                }
+            }
             );
 
             var purchaseInvoice =  new PurchaseInvoice
@@ -82,7 +82,7 @@ namespace ManageShop.Services.PurchaseInvoices
                         Status = _.Products.Status.ToString(),
                         ProductGroupId = _.Products.ProductGroupId,
                         ProductGroupName = _.Products.ProductGroup.Name,
-                    }).ToList();
+                    }).DistinctBy(_ => _.ProductCode).ToList();
         }
 
         public async Task<List<GetPurchaseInvoiceDto>> Search(string search)
@@ -98,7 +98,7 @@ namespace ManageShop.Services.PurchaseInvoices
                        Status = _.Products.Status.ToString(),
                        ProductGroupId = _.Products.ProductGroupId,
                        ProductGroupName = _.Products.ProductGroup.Name,
-                   }).ToList();
+                   }).DistinctBy(_ => _.ProductCode).ToList();
         }
     }
     }

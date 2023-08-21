@@ -5,18 +5,26 @@ using BluePrint.TestTools.Products;
 using BluePrint.TestTools.SaleInvoices;
 using FluentAssertions;
 using ManageShop.Entities.Entities;
+using ManageShop.Services.DateGenerator;
 using ManageShop.Services.SalesInvoices.Contracts;
 using ManageShop.Services.SalesInvoices.Exception;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ManageShop.Units.Tests.SalesInvoices
 {
     public class SalesInvoicesTests : BusinessUnitTest
     {
+        private readonly DateTime _date;
         private readonly SaleInvoiceService _sut;
         public SalesInvoicesTests()
         {
-            _sut = SaleInvoiceFactory.CreateService(SetupContext);
+            var dateTime = new Mock<DateTimeGenerator>();
+            dateTime.Setup(_ => _.Generate()).Returns(DateTime.Now);
+            _date = dateTime.Object.Generate();
+
+            _sut = SaleInvoiceFactory.CreateService(SetupContext, dateTime.Object);
         }
 
         [Fact]

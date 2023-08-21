@@ -20,6 +20,26 @@ namespace ManageShop.Units.Tests.PurchaseInvoices
             _sut = PurchaseInvoicesFactory.CreateService(SetupContext);
         }
 
+        [Fact]
+        public async Task GetAll()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            var product = ProductFactory.Create(productGroup);
+            var purchaseInvoice = PurchaseInvoicesFactory.Create(product);
+            DbContext.Save(purchaseInvoice);
+
+            // Act
+            var _expected = await _sut.GetAll();
+
+            // Assert
+            _expected.First().Title.Should().Be(product.Title);
+            _expected.First().Inventory.Should().Be(product.Inventory);
+            _expected.First().MinimumInventory.Should().Be(product.MinimumInventory);
+            _expected.First().Status.Should().Be(product.Status.ToString());
+            _expected.First().ProductGroupId.Should().Be(product.ProductGroup.Id);
+            _expected.First().ProductGroupName.Should().Be(product.ProductGroup.Name);
+        }
 
         [Fact]
         public async Task Add_add_a_purachase_invoice()
@@ -132,6 +152,68 @@ namespace ManageShop.Units.Tests.PurchaseInvoices
 
             actual.ProductPurchaseInvoices.Select(_ => _.Products).First().Status.Should()
                 .Be(ProductStatus.UnAvailable);
+        }
+
+        [Fact]
+        public async Task Search_search_by_title()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            var product = ProductFactory.Create(productGroup);
+            var purchaseInvoice = PurchaseInvoicesFactory.Create(product);
+            DbContext.Save(purchaseInvoice);
+
+            // Act
+            var _expected = await _sut.Search(product.Title);
+
+            // Assert
+            _expected.Single().Title.Should().Be(product.Title);
+            _expected.Single().Inventory.Should().Be(product.Inventory);
+            _expected.Single().MinimumInventory.Should().Be(product.MinimumInventory);
+            _expected.Single().Status.Should().Be(product.Status.ToString());
+            _expected.Single().ProductGroupId.Should().Be(product.ProductGroup.Id);
+            _expected.Single().ProductGroupName.Should().Be(product.ProductGroup.Name);
+        }
+        [Fact]
+        public async Task Search_search_by_status()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            var product = ProductFactory.Create(productGroup);
+            var purchaseInvoice = PurchaseInvoicesFactory.Create(product);
+            DbContext.Save(purchaseInvoice);
+
+            // Act
+            var _expected = await _sut.Search(product.Status.ToString());
+
+            // Assert
+            _expected.Single().Title.Should().Be(product.Title);
+            _expected.Single().Inventory.Should().Be(product.Inventory);
+            _expected.Single().MinimumInventory.Should().Be(product.MinimumInventory);
+            _expected.Single().Status.Should().Be(product.Status.ToString());
+            _expected.Single().ProductGroupId.Should().Be(product.ProductGroup.Id);
+            _expected.Single().ProductGroupName.Should().Be(product.ProductGroup.Name);
+        }
+
+        [Fact]
+        public async Task Search_search_by_group_name()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            var product = ProductFactory.Create(productGroup);
+            var purchaseInvoice = PurchaseInvoicesFactory.Create(product);
+            DbContext.Save(purchaseInvoice);
+
+            // Act
+            var _expected = await _sut.Search(product.ProductGroup.Name);
+
+            // Assert
+            _expected.Single().Title.Should().Be(product.Title);
+            _expected.Single().Inventory.Should().Be(product.Inventory);
+            _expected.Single().MinimumInventory.Should().Be(product.MinimumInventory);
+            _expected.Single().Status.Should().Be(product.Status.ToString());
+            _expected.Single().ProductGroupId.Should().Be(product.ProductGroup.Id);
+            _expected.Single().ProductGroupName.Should().Be(product.ProductGroup.Name);
         }
     }
 }

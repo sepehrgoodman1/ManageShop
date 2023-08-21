@@ -21,6 +21,21 @@ namespace ManageShop.Units.Tests.ProductGroups
         }
 
         [Fact]
+        public async Task GetAll()
+        {
+            // Arrange
+            var productGroup = ProductGroupFactory.Create();
+            DbContext.Save(productGroup);
+
+            // Act
+            var _expected = await _sut.GetAll();
+
+            // Assert
+            _expected.Single().Name.Should().Be(productGroup.Name);
+        }
+
+
+        [Fact]
         public async Task Add_add_a_productgroup()
         {
             // Arrange

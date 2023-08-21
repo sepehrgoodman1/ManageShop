@@ -13,10 +13,6 @@
 	<ItemGroup>
 	  <Folder Include="AccountingDocuments\Contracts\Dtos\" />
 	  <Folder Include="AccountingDocuments\Exception\" />
-	  <Folder Include="ProductPurchaseInvoices\Contracts\Dtos\" />
-	  <Folder Include="ProductPurchaseInvoices\Exception\" />
-	  <Folder Include="ProductSalesInvoices\Contracts\Dtos\" />
-	  <Folder Include="ProductSalesInvoices\Exception\" />
 	  <Folder Include="PurchaseInvoices\Exception\" />
 	</ItemGroup>
 	
